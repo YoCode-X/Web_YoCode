@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website YoCode</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Yo</h1>
+            <h2>Code</h2>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">HOME</a></li>
+                <li><a href="#">PORTFOLIO</a></li>
+                <li><a href="#">PROJECTS</a></li>
+                <li><a href="#">ABOUT</a></li>
+                <li><a href="#">BLOG</a></li>
+                <li><a href="login.html">LOGIN</a></li>
+            </ul>
+        </nav>
+        <div id="user-info">
+            <!-- Nama pengguna akan ditampilkan di sini -->
+            Selamat datang, <span id="username-display"></span>!
+            <button id="logout-btn">Logout</button>
+        </div>
+    </header>
+    <main>
+        <section class="hero">
+            <h1>KWASEK</h1>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 web by YoCode. All rights reserved.</p>
+    </footer>
+    <script>
+        // Ambil username dari Local Storage
+        const username = localStorage.getItem('username');
+        if (username) {
+            // Tampilkan username
+            document.getElementById('username-display').textContent = username;
+        } else {
+            // Sembunyikan bagian user-info jika tidak ada username
+            document.getElementById('user-info').style.display = 'none';
+        }
+
+        // Logout
+        document.getElementById('logout-btn').addEventListener('click', function() {
+            localStorage.removeItem('username'); // Hapus username dari Local Storage
+            window.location.href = 'login.html'; // Redirect ke halaman login
+        });
+    </script>
+</body>
+</html>
