@@ -1,28 +1,31 @@
-document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const username = document.getElementById('username').value; // Pastikan ID sesuai
-    const password = document.getElementById('password').value; // Pastikan ID sesuai
+document.getElementById("loginForm").addEventListener("submit", async function (event) {
+    event.preventDefault(); // Mencegah reload halaman
 
-    fetch('login.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, password })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            // Simpan username di Local Storage
-            localStorage.setItem('username', username);
-            // Redirect ke halaman utama
-            window.location.href = data.redirect;
-        } else {
-            alert(data.message || 'Login gagal!');
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    try {
+        const response = await fetch("login.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password })
+        });
+
+        if (!response.ok) {
+            throw new Error("Gagal mengambil data JSON");
         }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Terjadi kesalahan. Silakan coba lagi.');
-    });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            alert("Login berhasil!");
+            localStorage.setItem("username", username); // Simpan username
+            window.location.replace("index.html"); // Redirect ke halaman utama dengan refresh
+        } else {
+            alert("Username atau password salah!");
+        }
+    } catch (error) {
+        console.error("Error saat login:", error);
+        alert("Terjadi kesalahan saat login, coba lagi.");
+    }
 });
